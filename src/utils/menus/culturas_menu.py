@@ -2,11 +2,13 @@
 Módulo para gerenciamento de culturas
 """
 from src.models.cultura import Cultura
+from src.models.cafe import Cafe
+from src.models.soja import Soja
 
 # Lista para armazenar as culturas em memória
 culturas = [
-    Cultura("Café", "Ruas"),
-    Cultura("Soja", "Talhões")
+    Cafe(),
+    Soja()
 ]
 
 def menu_culturas():
@@ -53,15 +55,17 @@ def cadastrar_cultura():
     nome = input("Nome da cultura: ")
     
     print("\nTipos de plantio disponíveis:")
-    print("[1] Ruas")
-    print("[2] Talhões")
+    print("[1] Ruas (para café)")
+    print("[2] Talhões (para soja)")
     
     try:
         tipo_opcao = int(input("\nEscolha o tipo de plantio: "))
         if tipo_opcao == 1:
             tipo_plantio = "Ruas"
+            nova_cultura = Cafe(nome)
         elif tipo_opcao == 2:
             tipo_plantio = "Talhões"
+            nova_cultura = Soja(nome)
         else:
             print("\n❌ Opção inválida! Cadastro cancelado.")
             return
@@ -72,8 +76,7 @@ def cadastrar_cultura():
                 print(f"\n❌ A cultura '{nome}' já está cadastrada!")
                 return
         
-        # Cria e adiciona a nova cultura
-        nova_cultura = Cultura(nome, tipo_plantio)
+        # Adiciona a nova cultura
         culturas.append(nova_cultura)
         print(f"\n✅ Cultura '{nome}' cadastrada com sucesso!")
         
