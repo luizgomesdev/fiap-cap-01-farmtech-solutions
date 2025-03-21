@@ -31,3 +31,5 @@ data/raw/*.csv
 .ipynb_checkpoints
 
 scripts
+
+relatorios

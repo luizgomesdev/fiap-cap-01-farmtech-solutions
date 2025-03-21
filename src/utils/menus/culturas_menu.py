@@ -250,102 +250,24 @@ def exportar_insumos_cultura():
                 # Criar o escritor CSV
                 escritor_csv = csv.writer(arquivo_csv, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 
-                # Escrever cabeçalho com informações da cultura
-                escritor_csv.writerow(['RELATÓRIO DE INSUMOS', cultura.nome.upper()])
-                escritor_csv.writerow(['Data de geração:', datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')])
-                escritor_csv.writerow([])
+                # Escrever o cabeçalho das colunas
+                escritor_csv.writerow(['Nome', 'Tipo', 'Quantidade por m²', 'Unidade', 'Total', 'Area_m2', 'Cultura'])
                 
-                # Informações da cultura
-                escritor_csv.writerow(['Cultura:', cultura.nome])
-                escritor_csv.writerow(['Área total (m²):', f"{cultura.area_m2:.2f}"])
-                
-                if cultura.comprimento_rua > 0:
-                    escritor_csv.writerow(['Método de plantio:', 'Ruas'])
-                    escritor_csv.writerow(['Comprimento de cada rua (m):', f"{cultura.comprimento_rua:.2f}"])
-                    escritor_csv.writerow(['Largura de cada rua (m):', f"{cultura.largura_rua:.2f}"])
-                    escritor_csv.writerow(['Número de ruas:', cultura.numero_ruas])
-                elif cultura.lado_talhao > 0:
-                    escritor_csv.writerow(['Método de plantio:', 'Talhões'])
-                    escritor_csv.writerow(['Tamanho do lado do talhão (m):', f"{cultura.lado_talhao:.2f}"])
-                    escritor_csv.writerow(['Número de talhões:', cultura.numero_talhoes])
-                
-                escritor_csv.writerow([])
-                escritor_csv.writerow(['INSUMOS UTILIZADOS'])
-                escritor_csv.writerow([])
-                
-                # Cabeçalho da tabela de insumos
-                escritor_csv.writerow(['Nome', 'Tipo', 'Quantidade por m²', 'Unidade', 'Total'])
-                
-                # Agrupar insumos por tipo
-                insumos_por_tipo = {}
+                # Escrever dados dos insumos (cada insumo em uma linha)
                 for insumo in cultura.insumos:
-                    if insumo.tipo not in insumos_por_tipo:
-                        insumos_por_tipo[insumo.tipo] = []
-                    insumos_por_tipo[insumo.tipo].append(insumo)
-                
-                # Escrever dados dos insumos agrupados por tipo
-                for tipo, lista_insumos in insumos_por_tipo.items():
-                    escritor_csv.writerow([f">> {tipo.upper()}"])
-                    for insumo in lista_insumos:
-                        total = insumo.calcular_quantidade_total(cultura.area_m2)
-                        escritor_csv.writerow([
-                            insumo.nome, 
-                            insumo.tipo, 
-                            f"{insumo.quantidade_por_m2:.4f}", 
-                            insumo.unidade, 
-                            f"{total:.2f}"
-                        ])
-                    escritor_csv.writerow([])  # Linha em branco entre grupos
+                    total = insumo.calcular_quantidade_total(cultura.area_m2)
+                    escritor_csv.writerow([
+                        insumo.nome, 
+                        insumo.tipo, 
+                        f"{insumo.quantidade_por_m2:.4f}", 
+                        insumo.unidade, 
+                        f"{total:.2f}",
+                        f"{cultura.area_m2:.2f}",  # Área da cultura
+                        cultura.nome              # Nome da cultura
+                    ])
             
             print(f"\n✅ Insumos da cultura '{cultura.nome}' exportados com sucesso para CSV!")
             print(f"Arquivo salvo em: {nome_arquivo}")
-            
-            # Perguntar se também quer exportar em formato TXT para leitura mais fácil
-            resposta = input("\nDeseja também exportar em formato TXT para leitura mais fácil? (S/N): ").strip().upper()
-            if resposta == 'S':
-                # Nome do arquivo TXT
-                nome_arquivo_txt = f"{diretorio}/insumos_{nome_cultura}_{data_hora}.txt"
-                
-                with open(nome_arquivo_txt, "w", encoding="utf-8") as arquivo:
-                    arquivo.write("=" * 70 + "\n")
-                    arquivo.write(f"RELATÓRIO DE INSUMOS - {cultura.nome.upper()}\n")
-                    arquivo.write(f"Data de geração: {datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}\n")
-                    arquivo.write("=" * 70 + "\n\n")
-                    
-                    # Informações da cultura
-                    arquivo.write(f"Cultura: {cultura.nome}\n")
-                    arquivo.write(f"Área total: {cultura.area_m2:.2f} m²\n")
-                    
-                    if cultura.comprimento_rua > 0:
-                        arquivo.write(f"Método de plantio: Ruas\n")
-                        arquivo.write(f"Comprimento de cada rua: {cultura.comprimento_rua:.2f} m\n")
-                        arquivo.write(f"Largura de cada rua: {cultura.largura_rua:.2f} m\n")
-                        arquivo.write(f"Número de ruas: {cultura.numero_ruas}\n")
-                    elif cultura.lado_talhao > 0:
-                        arquivo.write(f"Método de plantio: Talhões\n")
-                        arquivo.write(f"Tamanho do lado do talhão: {cultura.lado_talhao:.2f} m\n")
-                        arquivo.write(f"Número de talhões: {cultura.numero_talhoes}\n")
-                    
-                    # Insumos utilizados
-                    arquivo.write("\n" + "-" * 70 + "\n")
-                    arquivo.write("INSUMOS UTILIZADOS\n")
-                    arquivo.write("-" * 70 + "\n")
-                    
-                    arquivo.write(f"{'Nome':<25} {'Tipo':<15} {'Qtd/m²':<12} {'Unid.':<5} {'Total':<10}\n")
-                    arquivo.write("-" * 70 + "\n")
-                    
-                    # Imprimir insumos agrupados por tipo
-                    for tipo, lista_insumos in insumos_por_tipo.items():
-                        arquivo.write(f"\n>> {tipo.upper()}:\n")
-                        for insumo in lista_insumos:
-                            total = insumo.calcular_quantidade_total(cultura.area_m2)
-                            arquivo.write(f"{insumo.nome:<25} {insumo.tipo:<15} {insumo.quantidade_por_m2:<12.4f} {insumo.unidade:<5} {total:<10.2f}\n")
-                    
-                    arquivo.write("\n" + "=" * 70 + "\n")
-                    arquivo.write("FIM DO RELATÓRIO DE INSUMOS\n")
-                    arquivo.write("=" * 70 + "\n")
-                
-                print(f"Também exportado em TXT: {nome_arquivo_txt}")
             
         else:
             print("\n❌ Índice inválido!")

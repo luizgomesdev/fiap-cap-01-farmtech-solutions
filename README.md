@@ -63,32 +63,53 @@ A aplicação atende fazendas em **Minas Gerais**, considerando as culturas **ca
    ```bash
    cd fiap-cap-01-farmtech-solutions
    ```
-3. Instale as dependências:
+3. Instale as dependências (não são necessárias dependências externas para a funcionalidade básica):
    ```bash
-   pip install -r requirements.txt
+   # Nenhuma dependência externa é necessária para a execução básica
    ```
 4. Execute a aplicação Python:
    ```bash
    python main.py
    ```
-5. Para análise estatística, execute o script R:
-   ```bash
-   Rscript scripts/analysis.R
-   ```
 
----
+## 📋 **Estrutura e Funcionamento do Sistema**
+
+### 🔹 **Arquitetura do Projeto**
+O sistema está organizado em módulos com responsabilidades específicas:
+
+- **Módulo de Culturas**: Gerencia o cadastro, listagem, atualização e remoção de culturas (Café e Soja)
+- **Módulo de Áreas**: Calcula áreas de plantio usando diferentes métodos (ruas retangulares ou talhões)
+- **Módulo de Insumos**: Gerencia o cadastro de insumos e calcula as quantidades necessárias
+
+### 🔹 **Fluxo de Trabalho**
+1. **Cadastro de Culturas**: Primeiro, cadastre uma cultura (Café e Soja já vêm pré-cadastradas)
+2. **Cálculo de Área**: Defina a área da cultura usando cálculos por ruas ou talhões
+3. **Cadastro de Insumos**: Registre os insumos necessários (fertilizantes, defensivos, etc.)
+4. **Cálculo de Quantidades**: O sistema calcula automaticamente as quantidades de insumos necessárias com base na área
+5. **Exportação de Dados**: Exporte os dados dos cálculos para arquivos CSV em `/relatorios`
+
+### 🔹 **Recursos Principais**
+- **Menu Interativo**: Interface via terminal de fácil navegação
+- **Cálculos Automáticos**: Baseados em fórmulas específicas para cada cultura
+- **Exportação de Dados**: Relatórios em formato CSV para análise posterior
+- **Validações**: Sistema robusto que previne entradas inválidas
+
+### 🔹 **Exemplo de Uso**
+1. No menu principal, escolha "Gestão de Culturas" para ver as culturas disponíveis
+2. Selecione "Cálculo de Área Plantada" e defina a área para uma cultura
+3. Em "Manejo de Insumos", calcule as quantidades necessárias
+4. Volte ao menu de culturas e use "Exportar Insumos de Cultura" para gerar um relatório
 
 ## 📩 **Contato e Contribuição**
-Este projeto é desenvolvido como parte de um estudo de **Agricultura Digital**.  
-Contribuições são bem-vindas!  
+Este projeto é desenvolvido como estudo de **Agricultura Digital** para o curso de pós-graduação da FIAP.
 
-👨‍💻 Equipe de Desenvolvimento:  
-- **Nome 1** (Líder de Projeto)  
-- **Nome 2** (Desenvolvedor Python)  
-- **Nome 3** (Analista de Dados em R)  
-- **Nome 4** (Documentação e Versionamento)  
+👨‍💻 Equipe de Desenvolvimento:
+- **Nicolas Lemos Ribeiro** | RM 553273
+- **Luiz Felipe Alves Gomes** | RM 565151
+- **Ricardo de Paiva Melo** | RM 565522
+- **Desirée Alberti Batista** | RM 562893
 
-📬 Entre em contato: `seuemail@example.com`
+📬 Repositório: `https://github.com/luizgomesdev/fiap-cap-01-farmtech-solutions`
 
 ---
 

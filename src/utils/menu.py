@@ -16,7 +16,6 @@ def exibir_menu_principal():
         print("[1] Gestão de Culturas")
         print("[2] Cálculo de Área Plantada")
         print("[3] Manejo de Insumos")
-        print("[4] Exportar Dados")
         print("[0] Sair")
         print("-"*40)
         
