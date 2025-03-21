@@ -5,8 +5,7 @@ from src.models.cultura import Cultura
 
 class Soja(Cultura):
     """
-    Classe para representação da cultura de Soja, com cálculo de área específico
-    baseado em talhões quadrados
+    Classe para representação da cultura de Soja
     """
     def __init__(self, nome="Soja"):
         """
@@ -15,35 +14,23 @@ class Soja(Cultura):
         Args:
             nome (str, optional): Nome da cultura. Padrão é "Soja".
         """
-        super().__init__(nome, "Talhões")
-        self.lado_talhao = 0
-        self.numero_talhoes = 0
+        # Inicializa como cultura normal, sem tipo de plantio específico
+        super().__init__(nome)
     
-    def calcular_area(self, lado_talhao, numero_talhoes=1):
+    def calcular_area(self, lado_talhao=None, numero_talhoes=None):
         """
-        Calcula a área plantada de soja usando a fórmula:
-        Área = Lado × Lado × Número de talhões
+        Método de compatibilidade para cálculo de área
         
         Args:
-            lado_talhao (float): Tamanho do lado do talhão em metros
-            numero_talhoes (int, optional): Número de talhões. Padrão é 1.
+            lado_talhao (float, optional): Tamanho do lado do talhão em metros
+            numero_talhoes (int, optional): Número de talhões
             
         Returns:
             float: Área calculada em metros quadrados
         """
-        self.lado_talhao = lado_talhao
-        self.numero_talhoes = numero_talhoes
-        self.area_m2 = lado_talhao * lado_talhao * numero_talhoes
-        return self.area_m2
-    
-    def __str__(self):
-        """
-        Representação em string da cultura de Soja
-        
-        Returns:
-            str: Descrição da cultura de Soja
-        """
-        base_str = super().__str__()
-        if self.lado_talhao > 0:
-            return f"{base_str} | {self.numero_talhoes} talhão(ões) de {self.lado_talhao}m × {self.lado_talhao}m"
-        return base_str
+        if lado_talhao is not None:
+            # Garantir que numero_talhoes seja 1 se não for especificado
+            if numero_talhoes is None:
+                numero_talhoes = 1
+            return self.calcular_area_talhoes(lado_talhao, numero_talhoes)
+        return super().calcular_area()

@@ -5,8 +5,7 @@ from src.models.cultura import Cultura
 
 class Cafe(Cultura):
     """
-    Classe para representação da cultura de Café, com cálculo de área específico
-    baseado em ruas retangulares
+    Classe para representação da cultura de Café
     """
     def __init__(self, nome="Café"):
         """
@@ -15,38 +14,21 @@ class Cafe(Cultura):
         Args:
             nome (str, optional): Nome da cultura. Padrão é "Café".
         """
-        super().__init__(nome, "Ruas")
-        self.comprimento_rua = 0
-        self.largura_rua = 0
-        self.numero_ruas = 0
+        # Inicializa como cultura normal, sem tipo de plantio específico
+        super().__init__(nome)
     
-    def calcular_area(self, comprimento_rua, largura_rua, numero_ruas):
+    def calcular_area(self, comprimento_rua=None, largura_rua=None, numero_ruas=None):
         """
-        Calcula a área plantada de café usando a fórmula:
-        Área = Comprimento da rua × Largura da rua × Número de ruas
+        Método de compatibilidade para cálculo de área
         
         Args:
-            comprimento_rua (float): Comprimento de cada rua em metros
-            largura_rua (float): Largura de cada rua em metros
-            numero_ruas (int): Número de ruas
+            comprimento_rua (float, optional): Comprimento de cada rua em metros
+            largura_rua (float, optional): Largura de cada rua em metros
+            numero_ruas (int, optional): Número de ruas
             
         Returns:
             float: Área calculada em metros quadrados
         """
-        self.comprimento_rua = comprimento_rua
-        self.largura_rua = largura_rua
-        self.numero_ruas = numero_ruas
-        self.area_m2 = comprimento_rua * largura_rua * numero_ruas
-        return self.area_m2
-    
-    def __str__(self):
-        """
-        Representação em string da cultura de Café
-        
-        Returns:
-            str: Descrição da cultura de Café
-        """
-        base_str = super().__str__()
-        if self.comprimento_rua > 0:
-            return f"{base_str} | {self.numero_ruas} ruas de {self.comprimento_rua}m x {self.largura_rua}m"
-        return base_str
+        if comprimento_rua is not None and largura_rua is not None and numero_ruas is not None:
+            return self.calcular_area_ruas(comprimento_rua, largura_rua, numero_ruas)
+        return super().calcular_area()
