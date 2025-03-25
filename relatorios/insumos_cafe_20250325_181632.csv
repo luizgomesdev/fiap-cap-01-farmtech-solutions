@@ -1,0 +1,5 @@
+Nome;Tipo;Quantidade_por_m2;Unidade;Total;Area_m2;Cultura
+NPK 20-5-20;Fertilizante;0.0250;kg;3.12;125.00;Cafe
+Calcário Dolomítico;Fertilizante;0.0500;kg;6.25;125.00;Cafe
+Fungicida Sistêmico;Defensivo;0.0020;L;0.25;125.00;Cafe
+Água de Irrigação;Água/Irrigação;3.5000;L;437.50;125.00;Cafe

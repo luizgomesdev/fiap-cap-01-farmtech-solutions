@@ -62,7 +62,7 @@ fiap-cap-01-farmtech-solutions/
 
 ### 🔹 Pré-requisitos
 - Python 3.x
-- R (para análise estatística)
+- R CLI (para análise estatística)
 
 ### 🔹 Instalação
 1. Clone o repositório:
