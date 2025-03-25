@@ -250,20 +250,26 @@ def exportar_insumos_cultura():
                 # Criar o escritor CSV
                 escritor_csv = csv.writer(arquivo_csv, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 
-                # Escrever o cabeçalho das colunas
-                escritor_csv.writerow(['Nome', 'Tipo', 'Quantidade por m²', 'Unidade', 'Total', 'Area_m2', 'Cultura'])
+                # Escrever o cabeçalho das colunas - Garantindo compatibilidade com o script R
+                escritor_csv.writerow(['Nome', 'Tipo', 'Quantidade_por_m2', 'Unidade', 'Total', 'Area_m2', 'Cultura'])
                 
                 # Escrever dados dos insumos (cada insumo em uma linha)
                 for insumo in cultura.insumos:
                     total = insumo.calcular_quantidade_total(cultura.area_m2)
+                    
+                    # Converter para string, garantindo que usa ponto como separador decimal
+                    quantidade_str = f"{insumo.quantidade_por_m2:.4f}".replace(',', '.')
+                    total_str = f"{total:.2f}".replace(',', '.')
+                    area_str = f"{cultura.area_m2:.2f}".replace(',', '.')
+                    
                     escritor_csv.writerow([
                         insumo.nome, 
                         insumo.tipo, 
-                        f"{insumo.quantidade_por_m2:.4f}", 
+                        quantidade_str,  # Formato numérico com ponto decimal 
                         insumo.unidade, 
-                        f"{total:.2f}",
-                        f"{cultura.area_m2:.2f}",  # Área da cultura
-                        cultura.nome              # Nome da cultura
+                        total_str,       # Formato numérico com ponto decimal
+                        area_str,        # Formato numérico com ponto decimal
+                        cultura.nome
                     ])
             
             print(f"\n✅ Insumos da cultura '{cultura.nome}' exportados com sucesso para CSV!")

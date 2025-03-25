@@ -7,7 +7,7 @@ class Cafe(Cultura):
     """
     Classe para representação da cultura de Café
     """
-    def __init__(self, nome="Café"):
+    def __init__(self, nome="Cafe"):
         """
         Inicializa uma cultura de Café
         

@@ -107,12 +107,6 @@ def cadastrar_insumo():
             print("\n❌ Opção inválida! Cadastro cancelado.")
             return
         
-        # Verifica se o insumo já existe
-        for insumo in insumos:
-            if insumo.nome.lower() == nome.lower() and insumo.tipo.lower() == tipo.lower():
-                print(f"\n❌ O insumo '{nome}' do tipo '{tipo}' já está cadastrado!")
-                return
-        
         # Cria e adiciona o novo insumo
         novo_insumo = Insumo(nome, tipo, quantidade_por_m2, unidade)
         insumos.append(novo_insumo)
@@ -238,13 +232,12 @@ def calcular_insumos():
                 print("\n❌ Nenhum insumo válido selecionado!")
                 return
             
-            # Adicionar os insumos selecionados à cultura (sem perguntar)
+            # Adicionar os insumos selecionados à cultura (permitindo duplicatas)
             insumos_adicionados = 0
             for insumo in insumos_selecionados:
-                # Verificar se o insumo já existe na cultura
-                if not any(i.nome == insumo.nome and i.tipo == insumo.tipo for i in cultura_selecionada.insumos):
-                    cultura_selecionada.adicionar_insumo(insumo)
-                    insumos_adicionados += 1
+                # Remover verificação de duplicidade - adicionar todos os insumos selecionados
+                cultura_selecionada.adicionar_insumo(insumo)
+                insumos_adicionados += 1
             
             # Calcular e exibir resultados
             print("\n" + "-"*60)
@@ -260,11 +253,7 @@ def calcular_insumos():
                 print(f"{insumo.nome:<20} {insumo.tipo:<15} {insumo.quantidade_por_m2:.4f} {insumo.unidade:<2} {total:.2f} {insumo.unidade:<10}")
             
             print("-"*60)
-            if insumos_adicionados > 0:
-                print(f"\n✅ {insumos_adicionados} novos insumos adicionados à cultura '{cultura_selecionada.nome}'!")
-            else:
-                print(f"\n⚠️ Todos os insumos selecionados já estavam cadastrados na cultura.")
-            
+            print(f"\n✅ {insumos_adicionados} insumos adicionados à cultura '{cultura_selecionada.nome}'!")
             print(f"Total de insumos na cultura: {len(cultura_selecionada.insumos)}")
             input("\nPressione ENTER para continuar...")
         else:

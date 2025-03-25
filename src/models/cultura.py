@@ -78,18 +78,12 @@ class Cultura:
     
     def adicionar_insumo(self, insumo):
         """
-        Adiciona um insumo à cultura
+        Adiciona um insumo à cultura, permitindo duplicatas
         
         Args:
-            insumo (Insumo): Objeto insumo a ser adicionado
+            insumo: Objeto do tipo Insumo
         """
-        # Verificar se o insumo já existe na cultura
-        for i in self.insumos:
-            if i.nome == insumo.nome and i.tipo == insumo.tipo:
-                # Insumo já existe, não adiciona duplicado
-                return
-        
-        # Adiciona o insumo se não for duplicado
+        # Adicionar sempre, sem verificar duplicidade
         self.insumos.append(insumo)
     
     def remover_insumo(self, indice):
